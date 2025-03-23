@@ -255,17 +255,17 @@ export class ComfyApi extends EventTarget {
   /**
    * Poll status  for colab and other things that don't support websockets.
    */
-  #pollQueue() {
-    setInterval(async () => {
-      try {
-        const resp = await this.fetchApi('/prompt')
-        const status = (await resp.json()) as StatusWsMessageStatus
-        this.dispatchCustomEvent('status', status)
-      } catch (error) {
-        this.dispatchCustomEvent('status', null)
-      }
-    }, 1000)
-  }
+  // #pollQueue() {
+  //   setInterval(async () => {
+  //     try {
+  //       const resp = await this.fetchApi('/prompt')
+  //       const status = (await resp.json()) as StatusWsMessageStatus
+  //       this.dispatchCustomEvent('status', status)
+  //     } catch (error) {
+  //       this.dispatchCustomEvent('status', null)
+  //     }
+  //   }, 1000)
+  // }
 
   /**
    * Creates and connects a WebSocket for realtime updates
@@ -296,7 +296,7 @@ export class ComfyApi extends EventTarget {
     this.socket.addEventListener('error', () => {
       if (this.socket) this.socket.close()
       if (!isReconnect && !opened) {
-        this.#pollQueue()
+        // this.#pollQueue()
       }
     })
 
@@ -400,8 +400,9 @@ export class ComfyApi extends EventTarget {
    * Gets a list of extension urls
    */
   async getExtensions(): Promise<ExtensionsResponse> {
-    const resp = await this.fetchApi('/extensions', { cache: 'no-store' })
-    return await resp.json()
+    return []
+    // const resp = await this.fetchApi('/extensions', { cache: 'no-store' })
+    // return await resp.json()
   }
 
   /**
@@ -439,7 +440,9 @@ export class ComfyApi extends EventTarget {
   async getNodeDefs({ validate = false }: { validate?: boolean } = {}): Promise<
     Record<string, ComfyNodeDef>
   > {
-    const resp = await this.fetchApi('/object_info', { cache: 'no-store' })
+    const resp = await fetch('/mock-data/object_info.json', {
+      cache: 'no-store'
+    })
     const objectInfoUnsafe = await resp.json()
     if (!validate) {
       return objectInfoUnsafe
@@ -509,7 +512,7 @@ export class ComfyApi extends EventTarget {
    * @returns The list of model folder keys
    */
   async getModelFolders(): Promise<{ name: string; folders: string[] }[]> {
-    const res = await this.fetchApi(`/experiment/models`)
+    const res = await fetch('/mock-data/models.json')
     if (res.status === 404) {
       return []
     }
@@ -739,8 +742,12 @@ export class ComfyApi extends EventTarget {
   /**
    * Gets a user data file for the current user
    */
+  // @ts-expect-error unused variable
   async getUserData(file: string, options?: RequestInit) {
-    return this.fetchApi(`/userdata/${encodeURIComponent(file)}`, options)
+    return await fetch('/mock-data/empty-array.json', {
+      cache: 'no-store'
+    })
+    // return this.fetchApi(`/userdata/${encodeURIComponent(file)}`, options)
   }
 
   /**
@@ -858,17 +865,19 @@ export class ComfyApi extends EventTarget {
     return resp.json()
   }
 
+  // @ts-expect-error unused variable
   async listUserDataFullInfo(dir: string): Promise<UserDataFullInfo[]> {
-    const resp = await this.fetchApi(
-      `/userdata?dir=${encodeURIComponent(dir)}&recurse=true&split=false&full_info=true`
-    )
-    if (resp.status === 404) return []
-    if (resp.status !== 200) {
-      throw new Error(
-        `Error getting user data list '${dir}': ${resp.status} ${resp.statusText}`
-      )
-    }
-    return resp.json()
+    return []
+    // const resp = await this.fetchApi(
+    //   `/userdata?dir=${encodeURIComponent(dir)}&recurse=true&split=false&full_info=true`
+    // )
+    // if (resp.status === 404) return []
+    // if (resp.status !== 200) {
+    //   throw new Error(
+    //     `Error getting user data list '${dir}': ${resp.status} ${resp.statusText}`
+    //   )
+    // }
+    // return resp.json()
   }
 
   async getLogs(): Promise<string> {
@@ -888,6 +897,14 @@ export class ComfyApi extends EventTarget {
 
   async getFolderPaths(): Promise<Record<string, string[]>> {
     return (await axios.get(this.internalURL('/folder_paths'))).data
+  }
+
+  async getWorkflowAsset(workflowPath: string): Promise<Response> {
+    return (
+      await axios.get(workflowPath, {
+        baseURL: import.meta.env.VITE_ASSETS_URL
+      })
+    ).data
   }
 
   /**

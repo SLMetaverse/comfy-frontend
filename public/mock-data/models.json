@@ -1,0 +1,106 @@
+[
+  {
+    "name": "checkpoints",
+    "folders": [
+      "~/models/checkpoints",
+      "~/output/checkpoints"
+    ]
+  },
+  {
+    "name": "loras",
+    "folders": [
+      "~/models/loras",
+      "~/output/loras"
+    ]
+  },
+  {
+    "name": "vae",
+    "folders": [
+      "~/models/vae",
+      "~/output/vae"
+    ]
+  },
+  {
+    "name": "text_encoders",
+    "folders": [
+      "~/models/text_encoders",
+      "~/models/clip",
+      "~/output/clip"
+    ]
+  },
+  {
+    "name": "diffusion_models",
+    "folders": [
+      "~/models/unet",
+      "~/models/diffusion_models",
+      "~/output/diffusion_models"
+    ]
+  },
+  {
+    "name": "clip_vision",
+    "folders": [
+      "~/models/clip_vision"
+    ]
+  },
+  {
+    "name": "style_models",
+    "folders": [
+      "~/models/style_models"
+    ]
+  },
+  {
+    "name": "embeddings",
+    "folders": [
+      "~/models/embeddings"
+    ]
+  },
+  {
+    "name": "diffusers",
+    "folders": [
+      "~/models/diffusers"
+    ]
+  },
+  {
+    "name": "vae_approx",
+    "folders": [
+      "~/models/vae_approx"
+    ]
+  },
+  {
+    "name": "controlnet",
+    "folders": [
+      "~/models/controlnet",
+      "~/models/t2i_adapter"
+    ]
+  },
+  {
+    "name": "gligen",
+    "folders": [
+      "~/models/gligen"
+    ]
+  },
+  {
+    "name": "upscale_models",
+    "folders": [
+      "~/models/upscale_models"
+    ]
+  },
+  {
+    "name": "hypernetworks",
+    "folders": [
+      "~/models/hypernetworks"
+    ]
+  },
+  {
+    "name": "photomaker",
+    "folders": [
+      "~/models/photomaker"
+    ]
+  },
+  {
+    "name": "classifiers",
+    "folders": [
+      "~/models/classifiers"
+    ]
+  }
+]

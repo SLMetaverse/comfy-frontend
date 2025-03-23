@@ -101,20 +101,19 @@ export default defineConfig({
   base: '',
   server: {
     host: VITE_REMOTE_DEV ? '0.0.0.0' : undefined,
+    allowedHosts: ['xenw1.bikashshrestha192.com.np'],
     proxy: {
       '/internal': {
         target: DEV_SERVER_COMFYUI_URL
       },
 
-      '/api': {
-        target: DEV_SERVER_COMFYUI_URL,
-        // Return empty array for extensions API as these modules
-        // are not on vite's dev server.
-        bypass: (req, res, options) => {
-          if (req.url === '/api/extensions') {
-            res.end(JSON.stringify([]))
-          }
-          return null
+      '/app-asset': {
+        target: process.env.VITE_ASSETS_URL,
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/app-asset/, ''),
+        ssl: {
+          rejectUnauthorized: false
         }
       },
 
@@ -154,11 +153,9 @@ export default defineConfig({
   build: {
     minify: SHOULD_MINIFY ? 'esbuild' : false,
     target: 'es2022',
-    sourcemap: true,
+    sourcemap: false,
     rollupOptions: {
-      // Disabling tree-shaking
-      // Prevent vite remove unused exports
-      treeshake: false
+      treeshake: true
     }
   },
 

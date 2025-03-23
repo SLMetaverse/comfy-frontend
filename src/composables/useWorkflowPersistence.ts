@@ -3,21 +3,25 @@ import { computed, watch, watchEffect } from 'vue'
 import { api } from '@/scripts/api'
 import { app as comfyApp } from '@/scripts/app'
 import { getStorageValue, setStorageValue } from '@/scripts/utils'
-import { useWorkflowService } from '@/services/workflowService'
-import { useCommandStore } from '@/stores/commandStore'
-import { useSettingStore } from '@/stores/settingStore'
+// import { useWorkflowService } from '@/services/workflowService'
+// import { useCommandStore } from '@/stores/commandStore'
+// import { useSettingStore } from '@/stores/settingStore'
 import { useWorkflowStore } from '@/stores/workflowStore'
 
 export function useWorkflowPersistence() {
   const workflowStore = useWorkflowStore()
-  const settingStore = useSettingStore()
+  // const settingStore = useSettingStore()
 
   const persistCurrentWorkflow = () => {
     const workflow = JSON.stringify(comfyApp.serializeGraph())
-    localStorage.setItem('workflow', workflow)
-    if (api.clientId) {
-      sessionStorage.setItem(`workflow:${api.clientId}`, workflow)
-    }
+    // localStorage.setItem('workflow', workflow)
+    window.parent.postMessage(
+      { type: 'workflow-update', payload: workflow },
+      '*'
+    )
+    // if (api.clientId) {
+    //   sessionStorage.setItem(`workflow:${api.clientId}`, workflow)
+    // }
   }
 
   const loadWorkflowFromStorage = async (
@@ -31,41 +35,75 @@ export function useWorkflowPersistence() {
   }
 
   const loadPreviousWorkflowFromStorage = async () => {
-    const workflowName = getStorageValue('Comfy.PreviousWorkflow')
-    const clientId = api.initialClientId ?? api.clientId
+    // const workflowName = getStorageValue('Comfy.PreviousWorkflow')
+    // const clientId = api.initialClientId ?? api.clientId
 
-    // Try loading from session storage first
-    if (clientId) {
-      const sessionWorkflow = sessionStorage.getItem(`workflow:${clientId}`)
-      if (await loadWorkflowFromStorage(sessionWorkflow, workflowName)) {
-        return true
+    // // Try loading from session storage first
+    // if (clientId) {
+    //   const sessionWorkflow = sessionStorage.getItem(`workflow:${clientId}`)
+    //   if (await loadWorkflowFromStorage(sessionWorkflow, workflowName)) {
+    //     return true
+    //   }
+    // }
+
+    // Try loading workflow from URL parameter
+    try {
+      const urlParams = new URLSearchParams(window.location.search)
+      const workflowPath = urlParams.get('asset-path')
+
+      window.addEventListener('message', async function (event) {
+        if (event.data && event.data.type === 'workflow-inject') {
+          // Process the data received from the parent
+          const receivedData = event.data.payload
+          await loadWorkflowFromStorage(receivedData, 'injected')
+          console.log('Data received from parent:', receivedData)
+        }
+      })
+
+      if (workflowPath) {
+        const response = await api.getWorkflowAsset(workflowPath)
+        if (!response) {
+          return false
+        }
+
+        if (
+          await loadWorkflowFromStorage(JSON.stringify(response), 'imported')
+        ) {
+          console.log('Successfully loaded workflow from URL')
+          return true
+        }
       }
+
+      return false
+    } catch (error) {
+      console.error('Error loading workflow from URL:', error)
+      return false
     }
 
-    // Fall back to local storage
-    const localWorkflow = localStorage.getItem('workflow')
-    return await loadWorkflowFromStorage(localWorkflow, workflowName)
+    // // Fall back to local storage
+    // const localWorkflow = localStorage.getItem('workflow')
+    // return await loadWorkflowFromStorage(localWorkflow, 'default')
   }
 
-  const loadDefaultWorkflow = async () => {
-    if (!settingStore.get('Comfy.TutorialCompleted')) {
-      await settingStore.set('Comfy.TutorialCompleted', true)
-      await useWorkflowService().loadBlankWorkflow()
-      await useCommandStore().execute('Comfy.BrowseTemplates')
-    } else {
-      await comfyApp.loadGraphData()
-    }
-  }
+  // const loadDefaultWorkflow = async () => {
+  //   if (!settingStore.get('Comfy.TutorialCompleted')) {
+  //     await settingStore.set('Comfy.TutorialCompleted', true)
+  //     await useWorkflowService().loadBlankWorkflow()
+  //     await useCommandStore().execute('Comfy.BrowseTemplates')
+  //   } else {
+  //     await comfyApp.loadGraphData()
+  //   }
+  // }
 
   const restorePreviousWorkflow = async () => {
     try {
-      const restored = await loadPreviousWorkflowFromStorage()
-      if (!restored) {
-        await loadDefaultWorkflow()
-      }
+      await loadPreviousWorkflowFromStorage()
+      // if (!restored) {
+      //   await loadDefaultWorkflow()
+      // }
     } catch (err) {
       console.error('Error loading previous workflow', err)
-      await loadDefaultWorkflow()
+      // await loadDefaultWorkflow()
     }
   }
 

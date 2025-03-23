@@ -1,73 +1,73 @@
 import type { Keybinding } from '@/schemas/keyBindingSchema'
 
 export const CORE_KEYBINDINGS: Keybinding[] = [
-  {
-    combo: {
-      ctrl: true,
-      key: 'Enter'
-    },
-    commandId: 'Comfy.QueuePrompt'
-  },
-  {
-    combo: {
-      ctrl: true,
-      shift: true,
-      key: 'Enter'
-    },
-    commandId: 'Comfy.QueuePromptFront'
-  },
-  {
-    combo: {
-      ctrl: true,
-      alt: true,
-      key: 'Enter'
-    },
-    commandId: 'Comfy.Interrupt'
-  },
+  // {
+  //   combo: {
+  //     ctrl: true,
+  //     key: 'Enter'
+  //   },
+  //   commandId: 'Comfy.QueuePrompt'
+  // },
+  // {
+  //   combo: {
+  //     ctrl: true,
+  //     shift: true,
+  //     key: 'Enter'
+  //   },
+  //   commandId: 'Comfy.QueuePromptFront'
+  // },
+  // {
+  //   combo: {
+  //     ctrl: true,
+  //     alt: true,
+  //     key: 'Enter'
+  //   },
+  //   commandId: 'Comfy.Interrupt'
+  // },
   {
     combo: {
       key: 'r'
     },
     commandId: 'Comfy.RefreshNodeDefinitions'
   },
-  {
-    combo: {
-      key: 'q'
-    },
-    commandId: 'Workspace.ToggleSidebarTab.queue'
-  },
-  {
-    combo: {
-      key: 'w'
-    },
-    commandId: 'Workspace.ToggleSidebarTab.workflows'
-  },
-  {
-    combo: {
-      key: 'n'
-    },
-    commandId: 'Workspace.ToggleSidebarTab.node-library'
-  },
-  {
-    combo: {
-      key: 'm'
-    },
-    commandId: 'Workspace.ToggleSidebarTab.model-library'
-  },
-  {
-    combo: {
-      key: 's',
-      ctrl: true
-    },
-    commandId: 'Comfy.SaveWorkflow'
-  },
-  {
-    combo: {
-      key: 'o',
-      ctrl: true
-    },
-    commandId: 'Comfy.OpenWorkflow'
-  },
+  // {
+  //   combo: {
+  //     key: 'q'
+  //   },
+  //   commandId: 'Workspace.ToggleSidebarTab.queue'
+  // },
+  // {
+  //   combo: {
+  //     key: 'w'
+  //   },
+  //   commandId: 'Workspace.ToggleSidebarTab.workflows'
+  // },
+  // {
+  //   combo: {
+  //     key: 'n'
+  //   },
+  //   commandId: 'Workspace.ToggleSidebarTab.node-library'
+  // },
+  // {
+  //   combo: {
+  //     key: 'm'
+  //   },
+  //   commandId: 'Workspace.ToggleSidebarTab.model-library'
+  // },
+  // {
+  //   combo: {
+  //     key: 's',
+  //     ctrl: true
+  //   },
+  //   commandId: 'Comfy.SaveWorkflow'
+  // },
+  // {
+  //   combo: {
+  //     key: 'o',
+  //     ctrl: true
+  //   },
+  //   commandId: 'Comfy.OpenWorkflow'
+  // },
   {
     combo: {
       key: 'Backspace'
@@ -81,13 +81,13 @@ export const CORE_KEYBINDINGS: Keybinding[] = [
     },
     commandId: 'Comfy.Graph.GroupSelectedNodes'
   },
-  {
-    combo: {
-      key: ',',
-      ctrl: true
-    },
-    commandId: 'Comfy.ShowSettingsDialog'
-  },
+  // {
+  //   combo: {
+  //     key: ',',
+  //     ctrl: true
+  //   },
+  //   commandId: 'Comfy.ShowSettingsDialog'
+  // },
   // For '=' both holding shift and not holding shift
   {
     combo: {
@@ -160,18 +160,18 @@ export const CORE_KEYBINDINGS: Keybinding[] = [
     },
     commandId: 'Comfy.Canvas.ToggleSelectedNodes.Mute',
     targetElementId: 'graph-canvas'
-  },
-  {
-    combo: {
-      key: '`',
-      ctrl: true
-    },
-    commandId: 'Workspace.ToggleBottomPanelTab.logs-terminal'
-  },
-  {
-    combo: {
-      key: 'f'
-    },
-    commandId: 'Workspace.ToggleFocusMode'
   }
+  // {
+  //   combo: {
+  //     key: '`',
+  //     ctrl: true
+  //   },
+  //   commandId: 'Workspace.ToggleBottomPanelTab.logs-terminal'
+  // },
+  // {
+  //   combo: {
+  //     key: 'f'
+  //   },
+  //   commandId: 'Workspace.ToggleFocusMode'
+  // }
 ]

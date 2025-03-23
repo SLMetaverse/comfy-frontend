@@ -1,22 +1,22 @@
 <template>
   <div class="comfyui-body grid h-screen w-screen overflow-hidden">
-    <div class="comfyui-body-top" id="comfyui-body-top">
+    <!-- <div class="comfyui-body-top" id="comfyui-body-top">
       <TopMenubar v-if="useNewMenu === 'Top'" />
     </div>
     <div class="comfyui-body-bottom" id="comfyui-body-bottom">
       <TopMenubar v-if="useNewMenu === 'Bottom'" />
     </div>
     <div class="comfyui-body-left" id="comfyui-body-left" />
-    <div class="comfyui-body-right" id="comfyui-body-right" />
+    <div class="comfyui-body-right" id="comfyui-body-right" /> -->
     <div class="graph-canvas-container" id="graph-canvas-container">
       <GraphCanvas @ready="onGraphReady" />
     </div>
   </div>
 
-  <GlobalToast />
+  <!-- <GlobalToast />
   <UnloadWindowConfirmDialog v-if="!isElectron()" />
   <BrowserTabTitle />
-  <MenuHamburger />
+  <MenuHamburger /> -->
 </template>
 
 <script setup lang="ts">
@@ -26,12 +26,12 @@ import { useToast } from 'primevue/usetoast'
 import { computed, onBeforeUnmount, onMounted, watch, watchEffect } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import BrowserTabTitle from '@/components/BrowserTabTitle.vue'
-import MenuHamburger from '@/components/MenuHamburger.vue'
-import UnloadWindowConfirmDialog from '@/components/dialog/UnloadWindowConfirmDialog.vue'
+// import BrowserTabTitle from '@/components/BrowserTabTitle.vue'
+// import MenuHamburger from '@/components/MenuHamburger.vue'
+// import UnloadWindowConfirmDialog from '@/components/dialog/UnloadWindowConfirmDialog.vue'
 import GraphCanvas from '@/components/graph/GraphCanvas.vue'
-import GlobalToast from '@/components/toast/GlobalToast.vue'
-import TopMenubar from '@/components/topbar/TopMenubar.vue'
+// import GlobalToast from '@/components/toast/GlobalToast.vue'
+// import TopMenubar from '@/components/topbar/TopMenubar.vue'
 import { useCoreCommands } from '@/composables/useCoreCommands'
 import { useErrorHandling } from '@/composables/useErrorHandling'
 import { SERVER_CONFIG_ITEMS } from '@/constants/serverConfig'
@@ -165,7 +165,7 @@ const init = () => {
 const queuePendingTaskCountStore = useQueuePendingTaskCountStore()
 const onStatus = async (e: CustomEvent<StatusWsMessageStatus>) => {
   queuePendingTaskCountStore.update(e)
-  await queueStore.update()
+  // await queueStore.update()
 }
 
 const reconnectingMessage: ToastMessageOptions = {

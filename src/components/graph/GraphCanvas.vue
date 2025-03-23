@@ -8,14 +8,14 @@
     <template #side-bar-panel>
       <SideToolbar />
     </template>
-    <template #bottom-panel>
+    <!-- <template #bottom-panel>
       <BottomPanel />
-    </template>
+    </template> -->
     <template #graph-canvas-panel>
-      <SecondRowWorkflowTabs
+      <!-- <SecondRowWorkflowTabs
         v-if="workflowTabsPosition === 'Topbar (2nd-row)'"
         class="pointer-events-auto"
-      />
+      /> -->
       <GraphCanvasMenu v-if="canvasMenuEnabled" class="pointer-events-auto" />
     </template>
   </LiteGraphCanvasSplitterOverlay>
@@ -40,7 +40,7 @@
 import { computed, onMounted, ref, watch, watchEffect } from 'vue'
 
 import LiteGraphCanvasSplitterOverlay from '@/components/LiteGraphCanvasSplitterOverlay.vue'
-import BottomPanel from '@/components/bottomPanel/BottomPanel.vue'
+// import BottomPanel from '@/components/bottomPanel/BottomPanel.vue'
 import DomWidgets from '@/components/graph/DomWidgets.vue'
 import GraphCanvasMenu from '@/components/graph/GraphCanvasMenu.vue'
 import NodeBadge from '@/components/graph/NodeBadge.vue'
@@ -50,7 +50,7 @@ import SelectionToolbox from '@/components/graph/SelectionToolbox.vue'
 import TitleEditor from '@/components/graph/TitleEditor.vue'
 import NodeSearchboxPopover from '@/components/searchbox/NodeSearchBoxPopover.vue'
 import SideToolbar from '@/components/sidebar/SideToolbar.vue'
-import SecondRowWorkflowTabs from '@/components/topbar/SecondRowWorkflowTabs.vue'
+// import SecondRowWorkflowTabs from '@/components/topbar/SecondRowWorkflowTabs.vue'
 import { useChainCallback } from '@/composables/functional/useChainCallback'
 import { useCanvasDrop } from '@/composables/useCanvasDrop'
 import { useContextMenuTranslation } from '@/composables/useContextMenuTranslation'
@@ -60,8 +60,8 @@ import { useLitegraphSettings } from '@/composables/useLitegraphSettings'
 import { usePaste } from '@/composables/usePaste'
 import { useWorkflowPersistence } from '@/composables/useWorkflowPersistence'
 import { CORE_SETTINGS } from '@/constants/coreSettings'
-import { i18n } from '@/i18n'
-import { api } from '@/scripts/api'
+// import { i18n } from '@/i18n'
+// import { api } from '@/scripts/api'
 import { app as comfyApp } from '@/scripts/app'
 import { ChangeTracker } from '@/scripts/changeTracker'
 import { IS_CONTROL_WIDGET, updateControlWidgetLabel } from '@/scripts/widgets'
@@ -83,9 +83,9 @@ const canvasStore = useCanvasStore()
 const betaMenuEnabled = computed(
   () => settingStore.get('Comfy.UseNewMenu') !== 'Disabled'
 )
-const workflowTabsPosition = computed(() =>
-  settingStore.get('Comfy.Workflow.WorkflowTabsPosition')
-)
+// const workflowTabsPosition = computed(() =>
+//   settingStore.get('Comfy.Workflow.WorkflowTabsPosition')
+// )
 const canvasMenuEnabled = computed(() =>
   settingStore.get('Comfy.Graph.CanvasMenu')
 )
@@ -158,16 +158,16 @@ watch(
   }
 )
 
-const loadCustomNodesI18n = async () => {
-  try {
-    const i18nData = await api.getCustomNodesI18n()
-    Object.entries(i18nData).forEach(([locale, message]) => {
-      i18n.global.mergeLocaleMessage(locale, message)
-    })
-  } catch (error) {
-    console.error('Failed to load custom nodes i18n', error)
-  }
-}
+// const loadCustomNodesI18n = async () => {
+//   try {
+//     const i18nData = await api.getCustomNodesI18n()
+//     Object.entries(i18nData).forEach(([locale, message]) => {
+//       i18n.global.mergeLocaleMessage(locale, message)
+//     })
+//   } catch (error) {
+//     console.error('Failed to load custom nodes i18n', error)
+//   }
+// }
 
 const comfyAppReady = ref(false)
 const workflowPersistence = useWorkflowPersistence()
@@ -187,8 +187,8 @@ onMounted(async () => {
   // ChangeTracker needs to be initialized before setup, as it will overwrite
   // some listeners of litegraph canvas.
   ChangeTracker.init(comfyApp)
-  await loadCustomNodesI18n()
-  await settingStore.loadSettingValues()
+  // await loadCustomNodesI18n()
+  // await settingStore.loadSettingValues()
   CORE_SETTINGS.forEach((setting) => {
     settingStore.addSetting(setting)
   })

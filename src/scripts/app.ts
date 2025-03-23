@@ -134,10 +134,10 @@ export class ComfyApp {
   configuringGraph: boolean
   // @ts-expect-error fixme ts strict error
   ctx: CanvasRenderingContext2D
-  bodyTop: HTMLElement
-  bodyLeft: HTMLElement
-  bodyRight: HTMLElement
-  bodyBottom: HTMLElement
+  // bodyTop: HTMLElement
+  // bodyLeft: HTMLElement
+  // bodyRight: HTMLElement
+  // bodyBottom: HTMLElement
   canvasContainer: HTMLElement
   menu: ComfyAppMenu
   bypassBgColor: string
@@ -218,10 +218,10 @@ export class ComfyApp {
     this.ui = new ComfyUI(this)
     this.api = api
     // Dummy placeholder elements before GraphCanvas is mounted.
-    this.bodyTop = $el('div.comfyui-body-top')
-    this.bodyLeft = $el('div.comfyui-body-left')
-    this.bodyRight = $el('div.comfyui-body-right')
-    this.bodyBottom = $el('div.comfyui-body-bottom')
+    // this.bodyTop = $el('div.comfyui-body-top')
+    // this.bodyLeft = $el('div.comfyui-body-left')
+    // this.bodyRight = $el('div.comfyui-body-right')
+    // this.bodyBottom = $el('div.comfyui-body-bottom')
     this.canvasContainer = $el('div.graph-canvas-container')
 
     this.menu = new ComfyAppMenu(this)
@@ -762,7 +762,7 @@ export class ComfyApp {
       this.nodePreviewImages[id] = [blobUrl]
     })
 
-    api.init()
+    // api.init()
   }
 
   #addConfigureHandler() {
@@ -805,14 +805,14 @@ export class ComfyApp {
    * Set up the app on the page
    */
   async setup(canvasEl: HTMLCanvasElement) {
-    // @ts-expect-error fixme ts strict error
-    this.bodyTop = document.getElementById('comfyui-body-top')
-    // @ts-expect-error fixme ts strict error
-    this.bodyLeft = document.getElementById('comfyui-body-left')
-    // @ts-expect-error fixme ts strict error
-    this.bodyRight = document.getElementById('comfyui-body-right')
-    // @ts-expect-error fixme ts strict error
-    this.bodyBottom = document.getElementById('comfyui-body-bottom')
+    // // @ts-expect-error fixme ts strict error
+    // this.bodyTop = document.getElementById('comfyui-body-top')
+    // // @ts-expect-error fixme ts strict error
+    // this.bodyLeft = document.getElementById('comfyui-body-left')
+    // // @ts-expect-error fixme ts strict error
+    // this.bodyRight = document.getElementById('comfyui-body-right')
+    // // @ts-expect-error fixme ts strict error
+    // this.bodyBottom = document.getElementById('comfyui-body-bottom')
     // @ts-expect-error fixme ts strict error
     this.canvasContainer = document.getElementById('graph-canvas-container')
 
@@ -846,11 +846,11 @@ export class ComfyApp {
     // Ensure the canvas fills the window
     this.resizeCanvas()
     window.addEventListener('resize', () => this.resizeCanvas())
-    const ro = new ResizeObserver(() => this.resizeCanvas())
-    ro.observe(this.bodyTop)
-    ro.observe(this.bodyLeft)
-    ro.observe(this.bodyRight)
-    ro.observe(this.bodyBottom)
+    // const ro = new ResizeObserver(() => this.resizeCanvas())
+    // ro.observe(this.bodyTop)
+    // ro.observe(this.bodyLeft)
+    // ro.observe(this.bodyRight)
+    // ro.observe(this.bodyBottom)
 
     await useExtensionService().invokeExtensionsAsync('init')
     await this.registerNodes()
@@ -1015,7 +1015,8 @@ export class ComfyApp {
 
   #showMissingNodesError(missingNodeTypes: MissingNodeType[]) {
     if (useSettingStore().get('Comfy.Workflow.ShowMissingNodesWarning')) {
-      useDialogService().showLoadWorkflowWarning({ missingNodeTypes })
+      // useDialogService().showLoadWorkflowWarning({ missingNodeTypes })
+      console.log('missingNodeTypes', missingNodeTypes)
     }
   }
 
