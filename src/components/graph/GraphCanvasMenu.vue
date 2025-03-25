@@ -56,6 +56,13 @@
       @click="() => commandStore.execute('Comfy.Canvas.ToggleLinkVisibility')"
       data-testid="toggle-link-visibility-button"
     />
+    <Button
+      severity="secondary"
+      :icon="'pi pi-window-maximize'"
+      v-tooltip.left="'Toggle Fullscreen'"
+      :aria-label="'Toggle Fullscreen'"
+      @click="toggleFullscreen"
+    />
   </ButtonGroup>
 </template>
 
@@ -90,6 +97,14 @@ const stopRepeat = () => {
   if (interval) {
     clearInterval(interval)
     interval = null
+  }
+}
+
+const toggleFullscreen = () => {
+  if (document.fullscreenElement) {
+    document.exitFullscreen()
+  } else {
+    document.documentElement.requestFullscreen()
   }
 }
 </script>
