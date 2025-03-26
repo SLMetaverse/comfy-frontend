@@ -12,11 +12,12 @@ export function useWorkflowPersistence() {
   const workflowStore = useWorkflowStore()
   // const settingStore = useSettingStore()
 
-  const persistCurrentWorkflow = () => {
+  const persistCurrentWorkflow = async () => {
     const workflow = JSON.stringify(comfyApp.serializeGraph())
+    const workflowApi = JSON.stringify(await comfyApp.graphToPrompt())
     // localStorage.setItem('workflow', workflow)
     window.parent.postMessage(
-      { type: 'workflow-update', payload: workflow },
+      { type: 'workflow-update', payload: workflow, apiPayload: workflowApi },
       '*'
     )
     // if (api.clientId) {
