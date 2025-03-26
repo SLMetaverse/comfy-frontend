@@ -31,7 +31,7 @@ import { useCommandStore } from '@/stores/commandStore'
 import { useExecutionStore } from '@/stores/executionStore'
 import { useExtensionStore } from '@/stores/extensionStore'
 import { KeyComboImpl, useKeybindingStore } from '@/stores/keybindingStore'
-import { useModelStore } from '@/stores/modelStore'
+// import { useModelStore } from '@/stores/modelStore'
 import { SYSTEM_NODE_DEFS, useNodeDefStore } from '@/stores/nodeDefStore'
 import { useSettingStore } from '@/stores/settingStore'
 import { useToastStore } from '@/stores/toastStore'
@@ -1098,30 +1098,30 @@ export class ComfyApp {
     if (workflowSchemaV1Models?.length)
       embeddedModels.push(...workflowSchemaV1Models)
 
-    const getModelKey = (model: ModelFile) => model.url || model.hash
-    const validModels = embeddedModels.filter(getModelKey)
-    const uniqueModels = _.uniqBy(validModels, getModelKey)
+    // const getModelKey = (model: ModelFile) => model.url || model.hash
+    // const validModels = embeddedModels.filter(getModelKey)
+    // const uniqueModels = _.uniqBy(validModels, getModelKey)
 
-    if (
-      uniqueModels.length &&
-      useSettingStore().get('Comfy.Workflow.ShowMissingModelsWarning')
-    ) {
-      const modelStore = useModelStore()
-      await modelStore.loadModelFolders()
-      for (const m of uniqueModels) {
-        const modelFolder = await modelStore.getLoadedModelFolder(m.directory)
-        // @ts-expect-error
-        if (!modelFolder) m.directory_invalid = true
+    // if (
+    //   uniqueModels.length &&
+    //   useSettingStore().get('Comfy.Workflow.ShowMissingModelsWarning')
+    // ) {
+    //   const modelStore = useModelStore()
+    //   await modelStore.loadModelFolders()
+    //   for (const m of uniqueModels) {
+    //     const modelFolder = await modelStore.getLoadedModelFolder(m.directory)
+    //     // @ts-expect-error
+    //     if (!modelFolder) m.directory_invalid = true
 
-        const modelsAvailable = modelFolder?.models
-        const modelExists =
-          modelsAvailable &&
-          Object.values(modelsAvailable).some(
-            (model) => model.file_name === m.name
-          )
-        if (!modelExists) missingModels.push(m)
-      }
-    }
+    //     const modelsAvailable = modelFolder?.models
+    //     const modelExists =
+    //       modelsAvailable &&
+    //       Object.values(modelsAvailable).some(
+    //         (model) => model.file_name === m.name
+    //       )
+    //     if (!modelExists) missingModels.push(m)
+    //   }
+    // }
 
     try {
       // @ts-expect-error Discrepancies between zod and litegraph - in progress
