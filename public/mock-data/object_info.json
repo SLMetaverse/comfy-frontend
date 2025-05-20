@@ -129870,7 +129870,7 @@
       },
       "optional": {
         "model": [
-          "MODEL"
+          "WANVIDEOMODEL"
         ],
         "clip_vision": [
           "CLIP_VISION",
@@ -129921,7 +129921,7 @@
     },
     "output": [
       "IMAGE",
-      "MODEL",
+      "WANVIDEOMODEL",
       "CLIP_VISION",
       "WANTEXTENCODER",
       "WANVAE"
